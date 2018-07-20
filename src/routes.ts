@@ -10,7 +10,7 @@ const models: TsoaRoute.Models = {
   "AnalyticDataDb": {
     "properties": {
       "event": { "dataType": "string", "required": true },
-      "unique": { "dataType": "string", "required": true },
+      "unique_value": { "dataType": "string", "required": true },
       "id": { "dataType": "double", "required": true },
     },
   },
@@ -23,7 +23,7 @@ const models: TsoaRoute.Models = {
   "AnalyticDataNoIdDb": {
     "properties": {
       "event": { "dataType": "string", "required": true },
-      "unique": { "dataType": "string", "required": true },
+      "unique_value": { "dataType": "string", "required": true },
     },
   },
   "StandardResponseAnalyticDataDb[]": {

@@ -4,7 +4,7 @@ export interface AnalyticDataDb extends AnalyticDataNoIdDb {
 
 export interface AnalyticDataNoIdDb {
     event: string,
-    unique: string,
+    unique_value: string,
 }
 
 // Just an enum example that might come in handy

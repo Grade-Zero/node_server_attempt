@@ -12,8 +12,9 @@ import { Readable } from 'stream';
 
 export async function addData(data: AnalyticDataNoIdDb): Promise<AnalyticDataDb> {
     let baseData = {
+       id: 3,
        event: 'Room',
-       unique: 'Kitchen 1'
+       unique_value: 'Kitchen 1'
     }
     let insert = {...baseData, ...data}
     let id = await createAnalyticData(null, insert)
