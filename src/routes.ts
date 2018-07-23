@@ -4,13 +4,17 @@ import { AnalyticDataController } from './controllers/analytic_data';
 import { AuthenticationController } from './controllers/authentication';
 import { ItemController } from './controllers/item';
 import { SpecialController } from './controllers/special';
+import { AnalyticEventController } from './controllers/analytic_event';
 import { expressAuthentication } from './utils/authentication';
 
 const models: TsoaRoute.Models = {
+  "JSON": {
+  },
   "AnalyticDataDb": {
     "properties": {
-      "event": { "dataType": "string", "required": true },
-      "unique_value": { "dataType": "string", "required": true },
+      "device": { "dataType": "string", "required": true },
+      "store_id": { "dataType": "double", "required": true },
+      "event": { "ref": "JSON", "required": true },
       "id": { "dataType": "double", "required": true },
     },
   },
@@ -22,8 +26,9 @@ const models: TsoaRoute.Models = {
   },
   "AnalyticDataNoIdDb": {
     "properties": {
-      "event": { "dataType": "string", "required": true },
-      "unique_value": { "dataType": "string", "required": true },
+      "device": { "dataType": "string", "required": true },
+      "store_id": { "dataType": "double", "required": true },
+      "event": { "ref": "JSON", "required": true },
     },
   },
   "StandardResponseAnalyticDataDb[]": {
@@ -146,6 +151,19 @@ const models: TsoaRoute.Models = {
   "StandardResponseSpecial[]": {
     "properties": {
       "data": { "dataType": "array", "array": { "ref": "Special" }, "required": true },
+      "meta": { "dataType": "any", "required": true },
+    },
+  },
+  "AnalyticEvent": {
+    "properties": {
+      "id": { "dataType": "double", "required": true },
+      "event_name": { "dataType": "string", "required": true },
+      "event_value": { "dataType": "string" },
+    },
+  },
+  "StandardResponseAnalyticEvent[]": {
+    "properties": {
+      "data": { "dataType": "array", "array": { "ref": "AnalyticEvent" }, "required": true },
       "meta": { "dataType": "any", "required": true },
     },
   },
@@ -396,6 +414,25 @@ export function RegisterRoutes(app: any) {
 
 
       const promise = controller.Specials.apply(controller, validatedArgs);
+      promiseHandler(controller, promise, response, next);
+    });
+  app.get('/v1/analytic_data/events',
+    function(request: any, response: any, next: any) {
+      const args = {
+        limit: { "in": "query", "name": "limit", "dataType": "double" },
+      };
+
+      let validatedArgs: any[] = [];
+      try {
+        validatedArgs = getValidatedArgs(args, request);
+      } catch (err) {
+        return next(err);
+      }
+
+      const controller = new AnalyticEventController();
+
+
+      const promise = controller.Events.apply(controller, validatedArgs);
       promiseHandler(controller, promise, response, next);
     });
 

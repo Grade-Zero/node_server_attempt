@@ -1,9 +1,11 @@
 import { Route, Get, Post, Tags, Body, Query } from 'tsoa';
 import { StandardResponse } from '../models/standard';
-import { AnalyticDataApi, AnalyticDataDb, AnalyticDataNoIdDb } from '../models/analytic_data';
+import { AnalyticDataApi, AnalyticDataDb, AnalyticDataNoIdDb, AnalyticAll } from '../models/analytic_data';
 import { addData, getAllData } from '../services/analytic_data';
+import { getAllEvents } from '../services/analytic_event';
 // import { addData } from '../services/analytic_data';
-const mkdirp = require('mkdirp')
+// const mkdirp = require('mkdirp')
+import  * as mkdirp from 'mkdirp'
 
 @Route('analytic_data')
 export class AnalyticDataController {

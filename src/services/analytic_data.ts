@@ -1,6 +1,6 @@
 import * as _ from 'lodash'
 import { createAnalyticData, fetchAllData } from '../db/analytic_data';
-import { AnalyticDataDb, AnalyticDataNoIdDb, MediaContentTypes } from '../models/analytic_data';
+import { AnalyticDataDb, AnalyticDataNoIdDb, AnalyticEvents } from '../models/analytic_data';
 const mkdirp = require('mkdirp')
 import * as request from 'request'
 import * as fs from 'fs'
@@ -12,9 +12,12 @@ import { Readable } from 'stream';
 
 export async function addData(data: AnalyticDataNoIdDb): Promise<AnalyticDataDb> {
     let baseData = {
-       id: 3,
-       event: 'Room',
-       unique_value: 'Kitchen 1'
+       device: 'CC02_SEPT_15.xml',
+       store_id: 1,
+       event: JSON.stringify({
+           event: 'Room Clicked',
+           value: 'Kitchen 1'
+       })
     }
     let insert = {...baseData, ...data}
     let id = await createAnalyticData(null, insert)
